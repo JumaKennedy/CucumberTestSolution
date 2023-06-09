@@ -1,0 +1,59 @@
+{
+  "Valid": {
+	    "userName": "cWExQHJlZW5iZWF1dHkuY29t",
+	    "passWord": "SWFtdDFyM2Qh"
+	  },
+  "Invalid": {
+	    "userName": "aW52YWxpZEBkYXRhLmhhY2tlci5pbw==",
+	    "passWord": "SWFtdDFyM2Qh"
+	  },
+  
+  "defaultproperties":{
+		"url":"aHR0cHM6Ly9yZWVuYmVhdXR5LmNvbQ==",
+		"userName":"dmt5MjY4OEBnbWFpbC5jb20=",
+		"passWord":"VGVzdFBhc3MxMg==",
+		"paymentType":"Pay by bank wire",
+		"newPassWord":"VGVzdFBhc3MxMg==",
+		"hotelBookingURL":"aHR0cHM6Ly93d3cuY2xvY2stc29mdHdhcmUuY29tL2RlbW8tY2xvY2twbXMvaW5kZXguaHRtbA==",
+		"emailID": "dummy@gail.com",
+		"lastName": "Kholi",
+		"firstName": "Virat",
+		"phoneNumber": "0789654321",
+		"numberOfNights": "4",
+		"numberOfAdults": "2",
+		"numberOfChild": "0"
+	},
+	
+	"addressDetails":{
+		"fname": "Kenn",
+		"lname": "Jose",
+		"phone": "+1902 647 7777",
+		"address":"311 Kirby PKWY Bvld Ham",
+		"city":"Memphis",
+		"state":"Tennessee",
+		"zip": "38119",
+		"bill_address":"301 Creve Core Bvld",
+		"bill_city": "Dallas",
+		"bill_zip": "76002",
+		"bill_state": "Texas",
+		"shippingnotes":"Buy now, pay over time Third Party Credit Card Installment"
+
+	},
+
+	"creditCardDetails": {
+		"number": "NDkyOSAwMDAwIDAwMDAgNg==",
+		"brand": "VklTQQ==",
+		"expiryMonth": "MDU=",
+		"expiryYear": "MjAyNQ=="
+	},
+
+	"billingAddressDetails":{
+		"addLine":"Old Barley RD",
+		"zip":"43015",
+		"city":"New York",
+		"state":"NY",
+		"country": "United Sates"
+	}
+
+
+}
