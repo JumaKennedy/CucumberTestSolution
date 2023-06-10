@@ -2,6 +2,29 @@
 /bin/*
 /test-output/*
 /Reports/*
-/.idea/*
-/*.iml
-.settings/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans/eclipse###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/.mvn/
+/.settings/
+.gitattributes
