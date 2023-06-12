@@ -1,5 +1,4 @@
-@Login
-Feature: Login to Application credentials
+Feature: Login to Application with credentials
   
    @LoginwithCredentials
    Scenario: Login with credentials
