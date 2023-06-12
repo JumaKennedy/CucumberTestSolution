@@ -1,3 +1,4 @@
+@Login
 Feature: Login to Application credentials
   
    @LoginwithCredentials
@@ -13,10 +14,10 @@ Feature: Login to Application credentials
       
     Given I am on Login page 
     When I enters "<invalid>" credentials: username and a apassword  
-    Then I should get error message "<errormsg>"
+    Then I should get "<errormsg>" error message 
     
      Examples:
-   | invalid | errormsg |
+   | invalid | errormsg            |
    | Invalid | Invalid Credentials |
     
     

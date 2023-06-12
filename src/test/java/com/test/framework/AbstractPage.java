@@ -173,6 +173,17 @@ public abstract class AbstractPage {
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", ele);
 	}
+	
+	/**
+	 * <h1>jsClickWithoutWait</h1>
+	 * This jsClickWithoutWait - Java script click on the element passed
+	 */
+	public void jsClickWithWait(WebElement ele) {
+		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
+		wait.until(ExpectedConditions.visibilityOf(ele));
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		executor.executeScript("arguments[0].click();", ele);
+	}
 
 	/**
 	 * <h1>webGetListOfElements</h1>
@@ -215,6 +226,17 @@ public abstract class AbstractPage {
 	public boolean pressTab() {
 		Actions act = new Actions(driver);
 		act.sendKeys(Keys.TAB).build().perform();
+		return true;
+	}
+	
+	/**
+	 * <h1>pressTab</h1>
+	 * This Escape - presses Keyboard escape Key
+	 * Returns true boolean if the operation is successful
+	 */
+	public boolean pressEscape() {
+		Actions act = new Actions(driver);
+		act.sendKeys(Keys.ESCAPE).build().perform();
 		return true;
 	}
 	
@@ -271,6 +293,11 @@ public abstract class AbstractPage {
 		Actions actions = new Actions(driver);
 		actions.moveToElement(element);
 		actions.perform();
+	}
+	
+	public boolean close() {
+		 driver.close();
+		 return true;
 	}
 
 }

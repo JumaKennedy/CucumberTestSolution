@@ -30,6 +30,7 @@ public class InitDriver {
         switch (driverType.toLowerCase()) {
             case "chrome":
               ChromeOptions options = new ChromeOptions();
+              options.addArguments("incognito");
               //System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver");
               WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();
               WebDriverManager.chromedriver().setup();

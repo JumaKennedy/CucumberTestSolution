@@ -41,7 +41,7 @@ public class LogOnStepDef {
         
     }
     
-    @Then("I should get error message {string}")
+    @Then("I should get {string} error message")
     public void i_should_get_error_message(String error) {
     	Assert.assertEquals(logOnPage.ErrorMesssage(), error);
     }

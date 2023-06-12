@@ -46,7 +46,10 @@ public class LogOnPage extends AbstractPage {
     public  WebElement logOutMessage;
     
     @FindBy(xpath = "//*[@id='mp-pusher']/section[2]/div/div/div[1]/div/div[1]/div/h6")
-    public WebElement fullname;
+    public WebElement fullname;    
+
+    @FindBy(xpath = "//a[@title='Register with Now']")
+    public WebElement registerLink;
 	
 	private ScenarioContext sc;
 	
@@ -66,6 +69,7 @@ public class LogOnPage extends AbstractPage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 scrollTo(registerLink);
 		 webClickElement(loginBtn);	 
 		 takeScreenShot(sc,"application lunch successful");
 		 return true;
@@ -75,7 +79,7 @@ public class LogOnPage extends AbstractPage {
 	public boolean loginToSite(String credentials) {
 		webSendKeys(userName, TextEncryptor.decodedString(sc.readJsonData(credentials, "userName")));
 		webSendKeys(password, TextEncryptor.decodedString(sc.readJsonData(credentials, "passWord")));
-		scrollTo(loginBtn);
+		scrollTo(registerLink);
 		takeScreenShot(sc,"Login to application");
 		webClickElement(loginBtn);	 
 		return true;

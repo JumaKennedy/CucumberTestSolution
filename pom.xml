@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.automation</groupId>
-  <artifactId>com.testautomation</artifactId>
+  <groupId>com.test</groupId>
+  <artifactId>CucumberTestSolution</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>SeleniumCucumberBDDTestNG</name>
   
@@ -195,7 +195,7 @@
                     </suiteXmlFiles>
 					<!--<includes>
 						<include>**/DefaultRunner.java</include>
-					</includes>-->
+					</includes>-->					
 					<properties>
 						<property>
 							<!-- Increase the thread count for parallel runs -->
