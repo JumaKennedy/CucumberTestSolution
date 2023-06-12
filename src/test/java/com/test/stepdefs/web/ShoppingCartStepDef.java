@@ -64,7 +64,7 @@ public class ShoppingCartStepDef {
         
     }
 
-    @Then("Ienter my shipping information")
+    @Then("I enter my shipping information")
     public void ienter_my_shipping_information() {
     	shoppingCartPage.addShippingAddress();
         

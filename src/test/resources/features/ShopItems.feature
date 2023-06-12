@@ -1,4 +1,4 @@
-Feature: Add items to cart 
+Feature: Shopping cart and check out
   
    @AddItemToCart
    Scenario: view and add item to cart then clear cart
@@ -20,7 +20,7 @@ Feature: Add items to cart
     And I add an Item to cart by selecting color, size and Qty
     Then I am taken to cart with Option to check out or continue shopping.
     Then I click check out button
-    Then Ienter my shipping information
+    Then I enter my shipping information
     Then I am taken to payment option and I select paypal
     Then Im taken to paypal check out site
     
