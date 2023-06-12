@@ -1,4 +1,4 @@
-Feature: Add items to cart 
+Feature: Shop items and check out 
   
    @AddItemToCart
    Scenario: view and add item to cart then clear cart

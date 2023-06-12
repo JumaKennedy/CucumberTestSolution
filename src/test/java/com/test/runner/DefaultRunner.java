@@ -9,14 +9,14 @@ import io.cucumber.testng.CucumberOptions;
  * We specify tags to be run here & we can still override the tag from cli 
  */
 
-@CucumberOptions(tags = "not @Login or @smoke", glue = { "com.test.stepdefs" }, 
+@CucumberOptions(tags = "not @LoginInvalidCredentials", glue = { "com.test.stepdefs" }, 
 				plugin = {"json:target/cucumber.json", "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 						"pretty", "html:target/cucumber-reports/report.html",
 					    "json:target/cucumber-reports/CucumberTestReport.json"},
 				features = { "src/test/resources/features/" })
 public class DefaultRunner extends AbstractTestNGCucumberTests {
 	@Override
-	@DataProvider(parallel = true)
+	@DataProvider(parallel = false)
 	public Object[][] scenarios() {
 		return super.scenarios();
 	}
