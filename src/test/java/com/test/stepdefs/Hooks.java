@@ -1,5 +1,7 @@
 package com.test.stepdefs;
 
+import org.openqa.selenium.OutputType;
+
 import com.test.framework.ScenarioContext;
 
 import io.cucumber.java.After;
@@ -27,6 +29,10 @@ public class Hooks {
 
 	@After
 	public void after(Scenario scenario) {
+		if(scenario.isFailed()) {
+			final byte[] screenshot = sc.getDriver().getScreenshotAs(OutputType.BYTES);
+			sc.getScenario().attach(screenshot, "image/png", scenDesc);
+		}
 		sc.quitDriver();
 	}
 
