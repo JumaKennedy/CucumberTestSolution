@@ -12,11 +12,9 @@
         <slf4j-version>1.7.7</slf4j-version>
         <java-version>11</java-version>
         <logback.version>1.4.8</logback.version>
-        <lightbody.version>2.1.5</lightbody.version>
 	</properties>
 	
 	<dependencies>	
-		
 		<dependency>
 		    <groupId>ch.qos.logback</groupId>
 		    <artifactId>logback-core</artifactId>
@@ -112,12 +110,6 @@
 			 <artifactId>extentreports</artifactId>
 			 <version>5.0.8</version>
 		 </dependency>	
-		 <dependency>
-            <groupId>net.lightbody.bmp</groupId>
-            <artifactId>browsermob-core</artifactId>
-            <version>${lightbody.version}</version>
-            <scope>test</scope>
-        </dependency>
 	</dependencies>
 	
 	<profiles>
