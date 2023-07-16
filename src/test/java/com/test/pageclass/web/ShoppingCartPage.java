@@ -1,7 +1,10 @@
 package com.test.pageclass.web;
 
+import java.io.File;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +18,9 @@ import com.test.framework.AbstractPage;
 import com.test.framework.ScenarioContext;
 import com.test.framework.TextEncryptor;
 
+import net.lightbody.bmp.BrowserMobProxyServer;
+import net.lightbody.bmp.core.har.Har;
+
 /**
 * <h1>LoginPage</h1>
 * The LoginPage class is has all Login Page Attributes and the related action methods
@@ -24,6 +30,8 @@ import com.test.framework.TextEncryptor;
 public class ShoppingCartPage extends AbstractPage {
 	
 	protected static final Logger LOG = LoggerFactory.getLogger(ShoppingCartPage.class);
+	public BrowserMobProxyServer proxy;
+    public Proxy seleniumProxy;
 
 	@FindBy(linkText = "SHOP")
     public WebElement ShopMenuOption;
@@ -103,9 +111,15 @@ public class ShoppingCartPage extends AbstractPage {
 	
 	public boolean visit() {
 		 sc.getDriver().get(sc.decodedString(sc.readJsonData("defaultproperties", "url")));
+		 proxy.newHar("chrome.com");
+	        
 		 try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
+			Thread.sleep(2000);
+	        Har har = proxy.getHar();
+	        File harFile = new File("google.har");
+	        har.writeTo(harFile);
+			//Thread.sleep(100);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

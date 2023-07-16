@@ -76,7 +76,7 @@ public class UpdateInfoSteps extends AbstractPage {
 	// constructor
 	public UpdateInfoSteps(ScenarioContext scenarioContext) {
 		super(scenarioContext);
-		this.sc = scenarioContext;
+		this.sc = scenarioContext;		
 		PageFactory.initElements(scenarioContext.getDriver(), this);
 	}	
 	

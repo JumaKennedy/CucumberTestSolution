@@ -3,6 +3,7 @@ package com.test.stepdefs;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Proxy;
 
 import com.test.framework.ScenarioContext;
 
@@ -10,12 +11,16 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeStep;
 import io.cucumber.java.Scenario;
+import net.lightbody.bmp.BrowserMobProxyServer;
 
 public class Hooks {
 	
 	private String scenDesc;
 	private ScenarioContext sc;
 	private Scenario scenario;
+	
+	public BrowserMobProxyServer proxy;
+    public Proxy seleniumProxy;
 
 	public Hooks(ScenarioContext scenarioContext) {
 		this.sc = scenarioContext;
@@ -43,6 +48,7 @@ public class Hooks {
 			sc.getScenario().attach(screenshot, "image/png", scenDesc);
 		}
 		sc.quitDriver();
+		proxy.abort();
 	}
 
 }

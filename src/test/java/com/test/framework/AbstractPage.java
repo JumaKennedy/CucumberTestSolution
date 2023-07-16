@@ -256,7 +256,7 @@ public abstract class AbstractPage {
 	 * This takeWebScreenShot method Take screenshot for web app
 	 */
 	public boolean takeScreenShot(ScenarioContext sc, String content) {
-		final byte[] screenshot = driver.getScreenshotAs(OutputType.BYTES);
+		final byte[] screenshot = driver.getScreenshotAs(OutputType.BYTES);		
 		sc.getScenario().attach(screenshot, "image/png", content);
 		return true;
 	}
