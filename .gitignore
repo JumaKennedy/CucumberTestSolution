@@ -28,3 +28,4 @@
 /.mvn/
 /.settings/
 .gitattributes
+/slf4j-logs
