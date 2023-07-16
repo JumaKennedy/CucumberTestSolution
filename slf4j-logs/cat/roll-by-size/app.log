@@ -1,0 +1,63 @@
+3715 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+3730 [TestNG-PoolService-0] INFO  c.t.pageclass.web.UpdateInfoSteps - 
+url: --> https://reenbeauty.com 
+
+3731 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+7520 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+7724 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+9744 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+10014 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+10223 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+10421 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+10639 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+10771 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+10971 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+11155 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+11362 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+11483 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+11656 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+11825 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+13444 [TestNG-PoolService-0] INFO  com.test.framework.ScenarioContext - 
+========== Environment: CAT ======= 
+
+13449 [TestNG-PoolService-0] DEBUG c.t.pageclass.web.UpdateInfoSteps - 
+url: --> https://reenbeauty.com 
+
+2342 [TestNG-PoolService-0] INFO  c.t.pageclass.web.UpdateInfoSteps - 
+url: --> https://reenbeauty.com 
+
+13858 [TestNG-PoolService-0] DEBUG c.t.pageclass.web.UpdateInfoSteps - 
+url: --> https://reenbeauty.com 
+
