@@ -19,13 +19,13 @@
 *.ipr
 
 ### NetBeans/eclipse###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-/.mvn/
-/.settings/
+/nbproject
+/build
+/nbbuild
+/dist
+/nbdist
+/.nb-gradle
+/.mvn
+/.settings
 .gitattributes
 /slf4j-logs
