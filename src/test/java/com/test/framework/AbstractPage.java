@@ -1,6 +1,7 @@
 package com.test.framework;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 
 import org.openqa.selenium.By;
@@ -18,8 +19,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.appium.java_client.android.AndroidDriver;
-
 public abstract class AbstractPage {
 	
 	protected static final Logger LOG = LoggerFactory.getLogger(AbstractPage.class);
@@ -34,24 +33,22 @@ public abstract class AbstractPage {
 		driver = scenarioContext.getDriver();
 	}
 	
-	//Driver Initialisation for Mobile,  param to differentiate 
+	//Driver Initialization for Mobile,  param to differentiate 
 	public AbstractPage(ScenarioContext scenarioContext, String mobileVersion) {
 		if (System.getProperty("driverWaitTime") != null) {
 			driverWaitTime = Integer.valueOf(System.getProperty("driverWaitTime"));
 		}
 		driver = scenarioContext.getMobileDriver();
-
 	}
-
+	
 	/**
 	 * <h1>webClickElement</h1>
 	 * This webClickElement - Clicks on the web element if present
 	 * Accepts WebElement  
 	 * Script Fails if element is not found
 	 */
-	public boolean webClickElement(WebElement ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(ele));
+	public boolean webClickElement(WebElement ele) {		
+		wiatTemeot().until(ExpectedConditions.visibilityOf(ele));
 		ele.click();
 		return true;
 	}
@@ -62,9 +59,8 @@ public abstract class AbstractPage {
 	 * Accepts String web element locator 
 	 * Script Fails if element is not found
 	 */
-	public boolean webClickElement(String ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.elementToBeClickable((By.xpath(ele)))).click();
+	public boolean webClickElement(String ele) {		
+		wiatTemeot().until(ExpectedConditions.elementToBeClickable((By.xpath(ele)))).click();
 		return true;
 	}
 
@@ -74,9 +70,8 @@ public abstract class AbstractPage {
 	 * Accepts WebElement and the input string
 	 * Script Fails if element is not found
 	 */
-	public boolean webSendKeys(WebElement ele, String input) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(ele));
+	public boolean webSendKeys(WebElement ele, String input) {		
+		wiatTemeot().until(ExpectedConditions.visibilityOf(ele));
 		ele.sendKeys(input);
 		return true;
 	}
@@ -99,11 +94,9 @@ public abstract class AbstractPage {
 	 * Accepts String element path  
 	 * Script Fails if element is not found
 	 */
-	public String webGetText(String ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.elementToBeClickable((By.xpath(ele))));
+	public String webGetText(String ele) {		
+		wiatTemeot().until(ExpectedConditions.elementToBeClickable((By.xpath(ele))));
 		return driver.findElement(By.xpath(ele)).getText();
-
 	}
 
 	/**
@@ -112,9 +105,8 @@ public abstract class AbstractPage {
 	 * Accepts WebElement  
 	 * Script Fails if element is not found
 	 */
-	public String webGetText(WebElement ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(ele));
+	public String webGetText(WebElement ele) {		
+		wiatTemeot().until(ExpectedConditions.visibilityOf(ele));
 		return ele.getText();
 	}
 	
@@ -124,9 +116,8 @@ public abstract class AbstractPage {
 	 * Accepts WebElement and the attribute Name 
 	 * Script Fails if element is not found
 	 */
-	public String webGetAttribute(WebElement ele, String attributeName) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(ele));
+	public String webGetAttribute(WebElement ele, String attributeName) {		
+		wiatTemeot().until(ExpectedConditions.visibilityOf(ele));
 		return ele.getAttribute(attributeName);
 	}
 
@@ -155,6 +146,7 @@ public abstract class AbstractPage {
 	 */
 	public boolean webIsElementVisible(String ele) {
 		try{
+			wiatTemeot().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ele)));
 			if(driver.findElement(By.xpath(ele)).isDisplayed()){
 				return true;
 			}
@@ -178,9 +170,8 @@ public abstract class AbstractPage {
 	 * <h1>jsClickWithoutWait</h1>
 	 * This jsClickWithoutWait - Java script click on the element passed
 	 */
-	public void jsClickWithWait(WebElement ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(ele));
+	public void jsClickWithWait(WebElement ele) {		
+		wiatTemeot().until(ExpectedConditions.visibilityOf(ele));
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", ele);
 	}
@@ -189,16 +180,14 @@ public abstract class AbstractPage {
 	 * <h1>webGetListOfElements</h1>
 	 * This webGetListOfElements -returns the list of available webelements for the provided locator element
 	 */
-	public List<WebElement> webGetListOfElements(String ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(ele))));
+	public List<WebElement> webGetListOfElements(String ele) {		
+		wiatTemeot().until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(ele))));
 		return driver.findElements(By.xpath(ele));
-
 	}
 
 	/**
 	 * <h1>webIsElementSelected</h1>
-	 * This webIsElementSelected - Returns true if checkbox / radiobutton is selected
+	 * This webIsElementSelected - Returns true if checkbox / radio button is selected
 	 */
 	public boolean webIsElementSelected(WebElement ele) {
 		return ele.isSelected();
@@ -208,9 +197,8 @@ public abstract class AbstractPage {
 	 * <h1>waitForPageLoad</h1>
 	 * This waitForPageLoad - waits for the browser to load completely
 	 */
-	public void waitForPageLoad() {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(new Function<WebDriver, Boolean>() {
+	public void waitForPageLoad() {		
+		wiatTemeot().until(new Function<WebDriver, Boolean>() {
 			public Boolean apply(WebDriver driver) {
 				return String.valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState"))
 						.equals("complete");
@@ -274,7 +262,7 @@ public abstract class AbstractPage {
 	 * <h1>selectDropDownByName</h1>
 	 * This method selects a value by name from dropdown field
 	 */
-	public boolean selectDropDownByName(String dropDownName,String dropDownValue) {
+	public boolean selectDropDownByName(String dropDownName, String dropDownValue) {
 		Select drpCountry = new Select(driver.findElement(By.name(dropDownName)));
 		drpCountry.selectByVisibleText(dropDownValue);
 		return true;
@@ -294,6 +282,31 @@ public abstract class AbstractPage {
 		actions.moveToElement(element);
 		actions.perform();
 	}
+	
+	protected Wait<WebDriver> wiatTemeot(){
+		return new WebDriverWait(driver, driverWaitTime).ignoring(NoSuchElementException.class);
+	}	
+	
+	public WebElement find(By locator) {
+		wiatTemeot().until(ExpectedConditions.visibilityOfElementLocated(locator));
+        return driver.findElement(locator);
+    }
+	
+    public void type(String inputText, By locator) {
+    	 find(locator).sendKeys(inputText);
+    }
+
+    public void type(Keys key,By locator) {
+    	 find(locator).sendKeys(key);
+    }
+
+    public void clear(By locator) {
+    	 find(locator).clear();
+    }
+
+    public void click(By locator) {
+        find(locator).click();
+    }
 	
 	public boolean close() {
 		 driver.close();
