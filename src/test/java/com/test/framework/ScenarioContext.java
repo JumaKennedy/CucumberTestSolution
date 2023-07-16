@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import com.google.gson.Gson;
-import com.test.pageclass.web.LogOnPage;
 
 import io.cucumber.java.Scenario;
 
