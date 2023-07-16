@@ -118,7 +118,7 @@ public class ScenarioContext {
 	 */
 	public String readJsonData(String node, String field) {
 		Object obj = null;
-		//LOG.info("\n========== Environment: {} ======= \n", getEnvironment().toUpperCase());
+		LOG.info("\n========== Environment: {} ======= \n", getEnvironment().toUpperCase());
 		try {
 			switch (getEnvironment().toUpperCase()) {
 			case "PROD":

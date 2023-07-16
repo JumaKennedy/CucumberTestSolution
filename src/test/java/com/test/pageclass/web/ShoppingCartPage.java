@@ -21,9 +21,9 @@ import com.test.framework.TextEncryptor;
 * Single point of place to change if any locator is updated in Login Page
 * 
 */
-public class AddItemsToCartPage extends AbstractPage {
+public class ShoppingCartPage extends AbstractPage {
 	
-	protected static final Logger LOG = LoggerFactory.getLogger(AddItemsToCartPage.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(ShoppingCartPage.class);
 
 	@FindBy(linkText = "SHOP")
     public WebElement ShopMenuOption;
@@ -49,7 +49,7 @@ public class AddItemsToCartPage extends AbstractPage {
 	@FindBy(xpath = "//input[contains(@id,'quanity')]")
     public WebElement selectQty;
 	
-	@FindBy(xpath = "//span[contains(.,' Add to Cart')]")
+	@FindBy(xpath = "//*[@id='orderDetail']/div[2]/div/button")
     public WebElement AddBtn;
 	
 	@FindBy(xpath = "//*[@id='mp-pusher']/section[2]/div/div/div/div[1]/div[2]/a[2]")
@@ -70,6 +70,24 @@ public class AddItemsToCartPage extends AbstractPage {
 	@FindBy(xpath = "//button[@data-toggle='collapse']")
     public WebElement shipInfo;
 	
+	@FindBy(xpath = "//a[contains(@href,'checkout')]")
+    public WebElement checkOut;
+	
+	@FindBy(xpath = "//*[@id='firstName']")
+    public WebElement fname;
+	
+	@FindBy(xpath = "//*[@id='lastName']")
+    public WebElement lname;
+	
+	@FindBy(xpath = "//*[@id='email']") 
+    public WebElement email;
+	
+	@FindBy(xpath = "//*[@id='phone']")
+    public WebElement phone;
+	
+	@FindBy(xpath = "//*[@id='address']/div/div[10]/button")
+    public WebElement clickNext;	
+	
 	JavascriptExecutor js;
 	
 	Actions actions = new Actions(driver);	   
@@ -77,7 +95,7 @@ public class AddItemsToCartPage extends AbstractPage {
 	private ScenarioContext sc;
 	
 	// constructor
-	public AddItemsToCartPage(ScenarioContext scenarioContext) {
+	public ShoppingCartPage(ScenarioContext scenarioContext) {
 		super(scenarioContext);
 		this.sc = scenarioContext;
 		PageFactory.initElements(scenarioContext.getDriver(), this);	
@@ -160,9 +178,85 @@ public class AddItemsToCartPage extends AbstractPage {
 		
 		return true;
 	}
+		
+	public boolean checkOut() {
+		scrollTo(checkOut);
+		webClickElement(checkOut);		
+		return true;
+	}
 	
 	
+	@FindBy(xpath = "//*[@id='city']")
+    public WebElement city;
 	
+	@FindBy(xpath = "//*[@id='state']")
+    public WebElement state;
+	
+	@FindBy(xpath = "//*[@id='zip']")
+    public WebElement zip;
+	
+	@FindBy(xpath = "//*[@id='adderess']")
+    public WebElement address;
+		
+	@FindBy(xpath = "//*[@id='shippingnotes']")
+    public WebElement notes;
+	
+	public boolean addShippingAddress() {		
+		
+		webSendKeys(fname, sc.readJsonData("addressDetails", "fname")+sc.getRandomString());
+		lname.clear();
+		webSendKeys(lname, sc.readJsonData("addressDetails", "lname")+sc.getRandomString());
+		
+		email.clear();
+		
+		webSendKeys(email, TextEncryptor.decodedString(sc.readJsonData("Valid", "userName"))+sc.getRandomString());
+		
+		phone.clear();
+		webSendKeys(phone, sc.readJsonData("addressDetails", "phone"));
+		address.clear();
+		webSendKeys(address, sc.readJsonData("addressDetails", "address"));
+		city.clear();
+		webSendKeys(city, sc.readJsonData("addressDetails", "city"));
+		selectDropDownByText(state, sc.readJsonData("addressDetails", "state"));
+		
+		zip.clear();
+		webSendKeys(zip, sc.readJsonData("addressDetails", "zip"));
+		
+		notes.clear();
+		webSendKeys(notes, sc.readJsonData("addressDetails", "shippingnotes"));		
+		
+		scrollTo(clickNext);
+		takeScreenShot(sc,"adding shipping info");
+		webClickElement(clickNext);
+		
+		return true;
+	}
+	
+	@FindBy(xpath = "//*[@id='address']/div/div[10]/button")
+    public WebElement update;
+	
+	@FindBy(xpath = "//img[@alt='Check out with PayPal']")
+    public WebElement checkoutwithPaypal;
+	
+	public void checkouwithPaypal() {
+		scrollTo(update);
+		takeScreenShot(sc,"checking out");
+		webClickElement(checkoutwithPaypal);
+		
+	}
+
+	@FindBy(xpath = "//h5[contains(.,'Check out with PayPal')]")
+    public WebElement PayPal;
+	
+	@FindBy(xpath = "//img[@alt='Check out with PayPal']")
+    public WebElement chckoutNow;
+	
+	public void paypalOption() {
+		scrollTo(chckoutNow);
+		takeScreenShot(sc,"Order summery");
+	    Assert.assertEquals(PayPal.getText(), "Check out with PayPal");
+		
+	}
 
 	
 

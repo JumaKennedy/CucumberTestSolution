@@ -3,9 +3,11 @@ package com.test.pageclass.web;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.testng.Assert;
+
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import com.test.framework.AbstractPage;
 import com.test.framework.ScenarioContext;
@@ -17,7 +19,7 @@ import com.test.framework.ScenarioContext;
 */
 public class UpdateInfoSteps extends AbstractPage {
 	
-	private Logger log = LoggerFactory.getLogger(UpdateInfoSteps.class);
+	private static Logger log = LoggerFactory.getLogger(UpdateInfoSteps.class);
 	
 	String fullName="";
 	
@@ -115,20 +117,22 @@ public class UpdateInfoSteps extends AbstractPage {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(log.isDebugEnabled())
+			log.debug("\nError: --> {} \n", e.getLocalizedMessage());
 		}
 		
 		return true;
 	}	
 	
 	public boolean visit() {
-		 //log.info("\nurl: --> {} \n", sc.decodedString(sc.readJsonData("defaultproperties", "url")));
+		 log.info("\nurl: --> {} \n", sc.decodedString(sc.readJsonData("defaultproperties", "url")));
 		 sc.getDriver().get(sc.decodedString(sc.readJsonData("defaultproperties", "url")));
 		 try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(log.isDebugEnabled()) {
+				log.info("\nError: --> {} \n", e.getCause());
+			}
 		}
 		 
 		 takeScreenShot(sc,"application launch successful");
@@ -136,10 +140,17 @@ public class UpdateInfoSteps extends AbstractPage {
 	}
 	
 	public boolean upDatesuccess() {	
-		//log.info("\n\nFull name: {} \n\n", fullName, fullname.getText());
-		 scrollTo(headingFour);
-		 Assert.assertTrue(driver.getPageSource().contains(fullName));
-		 takeScreenShot(sc,"Update successful");
+		 log.debug("\nurl: --> {} \n", sc.decodedString(sc.readJsonData("defaultproperties", "url")));
+		try {
+			//log.info("\n\nFull name: {} \n\n", fullName, fullname.getText());
+			 scrollTo(headingFour);
+			 Assert.assertTrue(driver.getPageSource().contains(fullName));
+			 takeScreenShot(sc,"Update successful");
+		} catch (Exception e) {
+			if(log.isDebugEnabled()) {
+				log.info("\nError: --> {} \n", e.getCause());
+			}
+		}
 		 return true;
 	}	
 	

@@ -7,57 +7,27 @@
   
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cucumber.version>6.6.0</cucumber.version>
-		<testng.version>7.1.0</testng.version>
-		<slf4j-simple-version>1.6.1</slf4j-simple-version>
+		<cucumber.version>6.11.0</cucumber.version>
+		<testng.version>7.1.0</testng.version>		
         <slf4j-version>1.7.7</slf4j-version>
+        <java-version>11</java-version>
+        <logback.version>1.4.8</logback.version>
 	</properties>
-	<profiles>
-		<profile>
-			<!-- Prod Environment - Set this to Active -->
-			<id>prod</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>env</name>
-					<value>prod</value>
-				</property>
-			</activation>
-			<properties>
-				<environment>prod</environment>
-				<browser>chrome</browser>
-			</properties>
-		</profile>
-		<profile>
-			<!-- Config for test/staging environment -->
-			<id>cat</id>
-			<activation>
-				<property>
-					<name>env</name>
-					<value>cat</value>
-				</property>
-			</activation>
-			<properties>
-				<environment>cat</environment>
-				<browser>chrome</browser>
-			</properties>
-		</profile>
-		<profile>
-			<!-- Config for test/staging environment -->
-			<id>sit</id>
-			<activation>
-				<property>
-					<name>env</name>
-					<value>sit</value>
-				</property>
-			</activation>
-			<properties>
-				<environment>sit</environment>
-				<browser>chrome</browser>
-			</properties>
-		</profile>
-	</profiles>
-	<dependencies>
+	
+	<dependencies>	
+		<dependency>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-core</artifactId>
+		    <version>${logback.version}</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-classic</artifactId>
+		    <version>${logback.version}</version>
+		    <scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
@@ -87,18 +57,6 @@
 			<version>3.141.59</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.30</version>
-		</dependency>
-		<dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-        
 		<!-- JSON Dependencies -->
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
@@ -153,6 +111,52 @@
 			 <version>5.0.8</version>
 		 </dependency>	
 	</dependencies>
+	
+	<profiles>
+		<profile>
+			<!-- Prod Environment - Set this to Active -->
+			<id>prod</id>
+			<activation>				
+				<property>
+					<name>env</name>
+					<value>prod</value>
+				</property>
+			</activation>
+			<properties>
+				<environment>prod</environment>
+				<browser>chrome</browser>
+			</properties>
+		</profile>
+		<profile>
+			<!-- Config for test/staging environment -->
+			<id>cat</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>cat</value>
+				</property>
+			</activation>
+			<properties>
+				<environment>cat</environment>
+				<browser>chrome</browser>
+			</properties>
+		</profile>
+		<profile>
+			<!-- Config for test/staging environment -->
+			<id>sit</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>env</name>
+					<value>sit</value>
+				</property>
+			</activation>
+			<properties>
+				<environment>sit</environment>
+				<browser>chrome</browser>
+			</properties>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
@@ -169,8 +173,9 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+					<fork>true</fork>
 				</configuration>
 			</plugin>
 			<!-- Maven Surefire Plugin -->
@@ -187,7 +192,7 @@
 					<systemPropertyVariables>
 						<environment>${environment}</environment>
 						<browser>${browser}</browser>
-						<randomStringCount>5</randomStringCount>
+						<randomStringCount>15</randomStringCount>
 						<driverWaitTime>30</driverWaitTime>
 					</systemPropertyVariables>
 					<suiteXmlFiles>
@@ -200,7 +205,7 @@
 						<property>
 							<!-- Increase the thread count for parallel runs -->
 							<name>dataproviderthreadcount</name>
-							<value>1</value>
+							<value>2</value>
 						</property>
 					</properties>
 				</configuration>

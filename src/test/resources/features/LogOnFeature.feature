@@ -1,7 +1,6 @@
-@Login
-Feature: Login to Application credentials
+Feature: Login to Application with credentials
   
-   @LoginwithCredentials
+   @LoginwithCredentials @smoke
    Scenario: Login with credentials
       
     Given I am on Login page 
@@ -9,7 +8,7 @@ Feature: Login to Application credentials
     Then I should be able to login sucessfully
     And I logout  
     
-   @LoginInvalidCredentials @NegativeTest
+   @LoginInvalidCredentials @NegativeTest @smoke
    Scenario: Login with Invalid credentials
       
     Given I am on Login page 

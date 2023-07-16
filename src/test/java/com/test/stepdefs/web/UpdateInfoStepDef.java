@@ -10,17 +10,16 @@ public class UpdateInfoStepDef {
 	private ScenarioContext sc;
     private UpdateInfoSteps updateInfoSteps;
 
-    @Given("I login with my credentials")
-    public void i_login_with_my_credentials() {
-    	updateInfoSteps.visit();
-    }
-    
     public UpdateInfoStepDef(ScenarioContext scenarioContext) {
         this.sc = scenarioContext;
         updateInfoSteps = new UpdateInfoSteps(sc);
     }
     
-	
+    @Given("I login with my credentials")
+    public void i_login_with_my_credentials() {
+    	 updateInfoSteps.visit();    	   	
+    }
+    
     @Then("I fill in the profile update form and submit")
     public void i_fill_in_the_profileupdate_form_and_submit() {
     	updateInfoSteps.upDatemyInfo();
