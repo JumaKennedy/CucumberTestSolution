@@ -43,7 +43,7 @@
 
     <appender name="roll-by-time"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>slf4j-logs/${environment}/roll-by-time/${environment}.logs.log</file>
+        <file>slf4j-logs/${environment}/roll-by-time/logs.log</file>
         <rollingPolicy
             class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>slf4j-logs/${environment}/roll-by-time/app.%d{yyyy-MM-dd-HH-mm}.log.zip
@@ -61,7 +61,7 @@
         <file>slf4j-logs/${environment}/roll-by-time-and-size/logs.log</file>
         <rollingPolicy
             class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>slf4j-logs/${environment}/roll-by-time-and-size/app.%d{yyyy-MM-dd-mm}.%i.log.zip
+            <fileNamePattern>slf4j-logs/${environment}/roll-by-time-and-size/logs.%d{yyyy-MM-dd-mm}.%i.log.zip
             </fileNamePattern>
             <maxFileSize>5KB</maxFileSize>
             <maxHistory>20</maxHistory>
