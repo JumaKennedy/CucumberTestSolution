@@ -35,7 +35,6 @@ public class ScenarioContext {
 	private String browser;	
 	
 	
-	
 	public ScenarioContext() {
 		setContextMap(new HashMap<>());
 	}

@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.cucumber.java.After;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
@@ -31,7 +32,7 @@ import net.lightbody.bmp.core.har.Har;
 
 public class InitDriver {
 	
-	public BrowserMobProxyServer proxy;
+	public static BrowserMobProxyServer proxy;
     public Proxy seleniumProxy;
 	
     protected static final Logger log = LoggerFactory.getLogger(InitDriver.class);
@@ -105,9 +106,10 @@ public class InitDriver {
    	
    }
 
-   public void stopproxy() {
-    proxy.stop(); 
-   }
+    @After
+    public void teardown() {
+        proxy.stop();       
+    }
    
     public RemoteWebDriver makeMobDriver(String deviceVersion)  {
     	RemoteWebDriver driver = null;

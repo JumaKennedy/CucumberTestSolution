@@ -18,7 +18,8 @@ public class Hooks {
 	public Hooks(ScenarioContext scenarioContext) {
 		this.sc = scenarioContext;
 	}
-		
+	
+	
 	@BeforeStep	
     public void beforeStep() {
 		
@@ -39,8 +40,8 @@ public class Hooks {
 			final byte[] screenshot = sc.getDriver().getScreenshotAs(OutputType.BYTES);
 			sc.getScenario().attach(screenshot, "image/png", scenDesc);
 		}
-		sc.quitDriver();		
-		
+		sc.quitDriver();
+		//proxy.stop();
 	}
 
 }
