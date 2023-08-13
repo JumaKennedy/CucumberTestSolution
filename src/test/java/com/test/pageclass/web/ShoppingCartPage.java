@@ -111,19 +111,6 @@ public class ShoppingCartPage extends AbstractPage {
 	
 	public boolean visit() {
 		 sc.getDriver().get(sc.decodedString(sc.readJsonData("defaultproperties", "url")));
-		 proxy.newHar("chrome.com");
-	        
-		 try {
-			Thread.sleep(2000);
-	        Har har = proxy.getHar();
-	        File harFile = new File("google.har");
-	        har.writeTo(harFile);
-			//Thread.sleep(100);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 
 		 takeScreenShot(sc,"application lunch successful");
 		 return true;
 	}

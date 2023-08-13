@@ -1,16 +1,15 @@
 package com.test.framework;
 import java.io.File;
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.UnknownHostException;
 
+import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -22,10 +21,6 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.core.har.Har;
-import net.lightbody.bmp.proxy.CaptureType;
-
-import org.openqa.selenium.Proxy;
-import org.openqa.selenium.WebDriver;
 
 /**
 * <h1>InitDriver</h1>
@@ -58,11 +53,12 @@ public class InitDriver {
     
 
     public void openBrowser(WebDriver driver, String url) throws InterruptedException, IOException {
-        proxy.newHar("google.com");
+        proxy.newHar(url);
         driver.get(url);
         Thread.sleep(2000);
         Har har = proxy.getHar();
-        File harFile = new File("google.har");
+        String userDirectory = System.getProperty("user.dir");
+        File harFile = new File(userDirectory+File.separator+"my.har");
         har.writeTo(harFile);
     } 
 
@@ -81,10 +77,14 @@ public class InitDriver {
     	    ChromeOptions options = new ChromeOptions();
     	    String proxyOption = "--proxy-server=" + seleniumProxy.getHttpProxy();
     	    options.addArguments(proxyOption);
-    	    options.addArguments("-incognito");
-    	    options.addArguments("disable-infobars");
-    	    options.addArguments("incognito");
+    	    options.addArguments("--incognito--");
+    	    options.addArguments("--disable-infobars--");    	    
             options.addArguments("--remote-allow-origins=*");
+            options.addArguments("--ignore-ssl-errors=yes");
+            options.addArguments("--ignore-certificate-errors");
+            options.addArguments("--disable-web-security");
+            options.addArguments("--allow-insecure-localhost");
+            options.addArguments("--ignore-urlfetcher-cert-requests");
     	    
          //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
          //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
@@ -105,8 +105,10 @@ public class InitDriver {
    	
    }
 
-    
-    
+   public void stopproxy() {
+    proxy.stop(); 
+   }
+   
     public RemoteWebDriver makeMobDriver(String deviceVersion)  {
     	RemoteWebDriver driver = null;
         

@@ -1,6 +1,7 @@
 package com.test.framework;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
@@ -32,7 +33,9 @@ public class ScenarioContext {
 	//Default Configs
 	private String environment;
 	private String browser;	
-
+	
+	
+	
 	public ScenarioContext() {
 		setContextMap(new HashMap<>());
 	}
@@ -59,6 +62,13 @@ public class ScenarioContext {
 			driver = initDriver.makeDriver(getBrowser());
 			// Maximize current window
 			driver.manage().window().maximize();
+			try {
+				initDriver.openBrowser(driver, "reenbeauty.com");
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();			
+			}
 		}
 		return driver;
 	}
