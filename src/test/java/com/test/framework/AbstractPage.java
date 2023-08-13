@@ -1,17 +1,20 @@
 package com.test.framework;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.function.Function;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -50,8 +53,8 @@ public abstract class AbstractPage {
 	 * Script Fails if element is not found
 	 */
 	public boolean webClickElement(WebElement ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(ele));
+		
+		Wait().until(ExpectedConditions.visibilityOf(ele));
 		ele.click();
 		return true;
 	}
@@ -63,8 +66,8 @@ public abstract class AbstractPage {
 	 * Script Fails if element is not found
 	 */
 	public boolean webClickElement(String ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.elementToBeClickable((By.xpath(ele)))).click();
+		
+		Wait().until(ExpectedConditions.elementToBeClickable((By.xpath(ele)))).click();
 		return true;
 	}
 
@@ -75,8 +78,8 @@ public abstract class AbstractPage {
 	 * Script Fails if element is not found
 	 */
 	public boolean webSendKeys(WebElement ele, String input) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(ele));
+		
+		Wait().until(ExpectedConditions.visibilityOf(ele));
 		ele.sendKeys(input);
 		return true;
 	}
@@ -100,8 +103,8 @@ public abstract class AbstractPage {
 	 * Script Fails if element is not found
 	 */
 	public String webGetText(String ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.elementToBeClickable((By.xpath(ele))));
+		
+		Wait().until(ExpectedConditions.elementToBeClickable((By.xpath(ele))));
 		return driver.findElement(By.xpath(ele)).getText();
 
 	}
@@ -113,11 +116,19 @@ public abstract class AbstractPage {
 	 * Script Fails if element is not found
 	 */
 	public String webGetText(WebElement ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(ele));
+		
+		Wait().until(ExpectedConditions.visibilityOf(ele));
 		return ele.getText();
 	}
 	
+	
+	private Wait<WebDriver> Wait() {
+		Wait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver)
+		        .withTimeout(Duration.ofSeconds(30))
+		        .pollingEvery(Duration.ofSeconds(5))
+		        .ignoring(NoSuchElementException.class);
+		return fluentWait;
+	}
 	/**
 	 * <h1>webGetAttribute</h1>
 	 * This webGetAttribute - returns attribute value for the webElement element if present
@@ -125,8 +136,8 @@ public abstract class AbstractPage {
 	 * Script Fails if element is not found
 	 */
 	public String webGetAttribute(WebElement ele, String attributeName) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(ele));
+		
+		Wait().until(ExpectedConditions.visibilityOf(ele));
 		return ele.getAttribute(attributeName);
 	}
 
@@ -179,8 +190,8 @@ public abstract class AbstractPage {
 	 * This jsClickWithoutWait - Java script click on the element passed
 	 */
 	public void jsClickWithWait(WebElement ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(ele));
+		
+		Wait().until(ExpectedConditions.visibilityOf(ele));
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", ele);
 	}
@@ -190,8 +201,8 @@ public abstract class AbstractPage {
 	 * This webGetListOfElements -returns the list of available webelements for the provided locator element
 	 */
 	public List<WebElement> webGetListOfElements(String ele) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(ele))));
+		
+		Wait().until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(ele))));
 		return driver.findElements(By.xpath(ele));
 
 	}
@@ -208,9 +219,8 @@ public abstract class AbstractPage {
 	 * <h1>waitForPageLoad</h1>
 	 * This waitForPageLoad - waits for the browser to load completely
 	 */
-	public void waitForPageLoad() {
-		Wait<WebDriver> wait = new WebDriverWait(driver, driverWaitTime);
-		wait.until(new Function<WebDriver, Boolean>() {
+	public void waitForPageLoad() {		
+		Wait().until(new Function<WebDriver, Boolean>() {
 			public Boolean apply(WebDriver driver) {
 				return String.valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState"))
 						.equals("complete");

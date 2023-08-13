@@ -28,13 +28,8 @@ public class InitDriver {
 
     public RemoteWebDriver makeDriver(String driverType)  {
         switch (driverType.toLowerCase()) {
-            case "chrome":
-              ChromeOptions options = new ChromeOptions();
-              options.addArguments("incognito");
-              //System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver");
-              WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();
-              WebDriverManager.chromedriver().setup();
-              return new ChromeDriver(options);
+            case "chrome":              
+              return chrome();
             case "firefox":   
             // System.setProperty("webdriver.gecko.driver","src/test/resources/driver/geckodriver.exe");
              WebDriverManager.firefoxdriver().setup();
@@ -43,6 +38,19 @@ public class InitDriver {
                 return null;
         }
     }
+    
+    private RemoteWebDriver chrome() {
+    	
+    	 ChromeOptions options = new ChromeOptions();
+         options.addArguments("incognito");
+         options.addArguments("--remote-allow-origins=*");
+         //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
+         //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
+         WebDriverManager.chromedriver().setup();
+         return new ChromeDriver(options);
+    	
+    }
+    
     
     public RemoteWebDriver makeMobDriver(String deviceVersion)  {
     	RemoteWebDriver driver = null;
