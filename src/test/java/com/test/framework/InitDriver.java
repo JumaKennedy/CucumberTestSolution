@@ -70,7 +70,7 @@ public class InitDriver {
 
     	    proxy.addRequestFilter((request, contents, messageInfo)->{
     	        request.headers().add("iv-user", "login");
-    	        System.out.println(request.headers().entries().toString());
+    	        log.info("\n\n******\n Header Entries: {} \n********\n\n",request.headers().entries().toString());
     	        return null;
     	    });
 
