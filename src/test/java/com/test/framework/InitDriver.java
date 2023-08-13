@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.core.har.Har;
@@ -44,7 +45,7 @@ public class InitDriver {
         switch (driverType.toLowerCase()) {
 
             case "chrome":              
-              return chrome();
+              return chromeproxy();
             case "firefox":   
             // System.setProperty("webdriver.gecko.driver","src/test/resources/driver/geckodriver.exe");
             	WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();
@@ -65,17 +66,44 @@ public class InitDriver {
         har.writeTo(harFile);
     } 
 
-    private RemoteWebDriver chrome() {
+    private RemoteWebDriver chromeproxy() {
     	
-    	 ChromeOptions options = new ChromeOptions();
-         options.addArguments("incognito");
-         options.addArguments("--remote-allow-origins=*");
+    	    BrowserMobProxy proxy = new BrowserMobProxyServer();
+    	    proxy.start(0);
+    	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+
+    	    proxy.addRequestFilter((request, contents, messageInfo)->{
+    	        request.headers().add("iv-user", "login");
+    	        System.out.println(request.headers().entries().toString());
+    	        return null;
+    	    });
+
+    	    ChromeOptions options = new ChromeOptions();
+    	    String proxyOption = "--proxy-server=" + seleniumProxy.getHttpProxy();
+    	    options.addArguments(proxyOption);
+    	    options.addArguments("-incognito");
+    	    options.addArguments("disable-infobars");
+    	    options.addArguments("incognito");
+            options.addArguments("--remote-allow-origins=*");
+    	    
          //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
          //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
          WebDriverManager.chromedriver().setup();
          return new ChromeDriver(options);
     	
     }
+    
+    private RemoteWebDriver chrome() {
+    	
+   	 ChromeOptions options = new ChromeOptions();
+        options.addArguments("incognito");
+        options.addArguments("--remote-allow-origins=*");
+        //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
+        //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
+        WebDriverManager.chromedriver().setup();
+        return new ChromeDriver(options);
+   	
+   }
 
     
     

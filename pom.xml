@@ -13,6 +13,7 @@
         <java-version>11</java-version>
         <logback.version>1.4.8</logback.version>
         <lightbody.version>2.1.5</lightbody.version>
+        <selenium.java>4.6.0</selenium.java>
 	</properties>
 	
 	<dependencies>	
