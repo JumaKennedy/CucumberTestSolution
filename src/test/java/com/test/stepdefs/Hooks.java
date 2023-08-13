@@ -1,7 +1,5 @@
 package com.test.stepdefs;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.OutputType;
 
 import com.test.framework.ScenarioContext;
@@ -20,11 +18,10 @@ public class Hooks {
 	public Hooks(ScenarioContext scenarioContext) {
 		this.sc = scenarioContext;
 	}
-	
-	
+		
 	@BeforeStep	
     public void beforeStep() {
-		sc.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		
     }
 
 	@Before
@@ -42,8 +39,7 @@ public class Hooks {
 			final byte[] screenshot = sc.getDriver().getScreenshotAs(OutputType.BYTES);
 			sc.getScenario().attach(screenshot, "image/png", scenDesc);
 		}
-		sc.quitDriver();
-		
+		sc.quitDriver();		
 		
 	}
 

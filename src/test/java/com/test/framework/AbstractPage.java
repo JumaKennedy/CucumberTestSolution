@@ -52,8 +52,7 @@ public abstract class AbstractPage {
 	 * Accepts WebElement  
 	 * Script Fails if element is not found
 	 */
-	public boolean webClickElement(WebElement ele) {
-		
+	public boolean webClickElement(WebElement ele) {		
 		Wait().until(ExpectedConditions.visibilityOf(ele));
 		ele.click();
 		return true;
@@ -65,8 +64,7 @@ public abstract class AbstractPage {
 	 * Accepts String web element locator 
 	 * Script Fails if element is not found
 	 */
-	public boolean webClickElement(String ele) {
-		
+	public boolean webClickElement(String ele) {		
 		Wait().until(ExpectedConditions.elementToBeClickable((By.xpath(ele)))).click();
 		return true;
 	}
@@ -77,8 +75,7 @@ public abstract class AbstractPage {
 	 * Accepts WebElement and the input string
 	 * Script Fails if element is not found
 	 */
-	public boolean webSendKeys(WebElement ele, String input) {
-		
+	public boolean webSendKeys(WebElement ele, String input) {		
 		Wait().until(ExpectedConditions.visibilityOf(ele));
 		ele.sendKeys(input);
 		return true;
@@ -102,11 +99,9 @@ public abstract class AbstractPage {
 	 * Accepts String element path  
 	 * Script Fails if element is not found
 	 */
-	public String webGetText(String ele) {
-		
+	public String webGetText(String ele) {		
 		Wait().until(ExpectedConditions.elementToBeClickable((By.xpath(ele))));
 		return driver.findElement(By.xpath(ele)).getText();
-
 	}
 
 	/**
@@ -115,8 +110,7 @@ public abstract class AbstractPage {
 	 * Accepts WebElement  
 	 * Script Fails if element is not found
 	 */
-	public String webGetText(WebElement ele) {
-		
+	public String webGetText(WebElement ele) {		
 		Wait().until(ExpectedConditions.visibilityOf(ele));
 		return ele.getText();
 	}
@@ -135,8 +129,7 @@ public abstract class AbstractPage {
 	 * Accepts WebElement and the attribute Name 
 	 * Script Fails if element is not found
 	 */
-	public String webGetAttribute(WebElement ele, String attributeName) {
-		
+	public String webGetAttribute(WebElement ele, String attributeName) {		
 		Wait().until(ExpectedConditions.visibilityOf(ele));
 		return ele.getAttribute(attributeName);
 	}
@@ -200,8 +193,7 @@ public abstract class AbstractPage {
 	 * <h1>webGetListOfElements</h1>
 	 * This webGetListOfElements -returns the list of available webelements for the provided locator element
 	 */
-	public List<WebElement> webGetListOfElements(String ele) {
-		
+	public List<WebElement> webGetListOfElements(String ele) {		
 		Wait().until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(ele))));
 		return driver.findElements(By.xpath(ele));
 
