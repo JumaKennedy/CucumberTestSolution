@@ -1,8 +1,10 @@
 package com.test.framework;
 import java.io.File;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +17,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.test.stepdefs.Hooks;
+
 import io.appium.java_client.android.AndroidDriver;
 import io.cucumber.java.After;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -22,6 +26,7 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.core.har.Har;
+import net.lightbody.bmp.proxy.CaptureType;
 
 /**
 * <h1>InitDriver</h1>
@@ -30,10 +35,7 @@ import net.lightbody.bmp.core.har.Har;
 
 */
 
-public class InitDriver {
-	
-	public static BrowserMobProxyServer proxy;
-    public Proxy seleniumProxy;
+public class InitDriver {	
 	
     protected static final Logger log = LoggerFactory.getLogger(InitDriver.class);
     
@@ -41,76 +43,18 @@ public class InitDriver {
         switch (driverType.toLowerCase()) {
 
             case "chrome":              
-              return chromeproxy();
+            	return Hooks.chromeproxy();
             case "firefox":   
-            // System.setProperty("webdriver.gecko.driver","src/test/resources/driver/geckodriver.exe");
-            	WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();
+                // System.setProperty("webdriver.gecko.driver","src/test/resources/driver/geckodriver.exe");
+            	//WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();
             	WebDriverManager.firefoxdriver().setup();
              return new FirefoxDriver();
             default:
                 return null;
         }
     }
-    
-
-    public void openBrowser(WebDriver driver, String url) throws InterruptedException, IOException {
-        proxy.newHar(url);
-        driver.get(url);
-        Thread.sleep(2000);
-        Har har = proxy.getHar();
-        String userDirectory = System.getProperty("user.dir");
-        File harFile = new File(userDirectory+File.separator+"my.har");
-        har.writeTo(harFile);
-    } 
-
-    private RemoteWebDriver chromeproxy() {
-    	
-    	    BrowserMobProxy proxy = new BrowserMobProxyServer();
-    	    proxy.start(0);
-    	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
-
-    	    proxy.addRequestFilter((request, contents, messageInfo)->{
-    	        request.headers().add("iv-user", "login");
-    	        log.info("\n\n******\n Header Entries: {} \n********\n\n",request.headers().entries().toString());
-    	        return null;
-    	    });
-
-    	    ChromeOptions options = new ChromeOptions();
-    	    String proxyOption = "--proxy-server=" + seleniumProxy.getHttpProxy();
-    	    options.addArguments(proxyOption);
-    	    options.addArguments("--incognito--");
-    	    options.addArguments("--disable-infobars--");    	    
-            options.addArguments("--remote-allow-origins=*");
-            options.addArguments("--ignore-ssl-errors=yes");
-            options.addArguments("--ignore-certificate-errors");
-            options.addArguments("--disable-web-security");
-            options.addArguments("--allow-insecure-localhost");
-            options.addArguments("--ignore-urlfetcher-cert-requests");
-    	    
-         //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
-         //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
-         WebDriverManager.chromedriver().setup();
-         return new ChromeDriver(options);
-    	
-    }
-    
-    private RemoteWebDriver chrome() {
-    	
-   	 ChromeOptions options = new ChromeOptions();
-        options.addArguments("incognito");
-        options.addArguments("--remote-allow-origins=*");
-        //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
-        //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
-        WebDriverManager.chromedriver().setup();
-        return new ChromeDriver(options);
-   	
-   }
-
-    @After
-    public void teardown() {
-        proxy.stop();       
-    }
    
+  
     public RemoteWebDriver makeMobDriver(String deviceVersion)  {
     	RemoteWebDriver driver = null;
         

@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import com.google.gson.Gson;
+import com.test.stepdefs.Hooks;
 
 import io.cucumber.java.Scenario;
 
@@ -62,10 +63,8 @@ public class ScenarioContext {
 			// Maximize current window
 			driver.manage().window().maximize();
 			try {
-				initDriver.openBrowser(driver, "reenbeauty.com");
-				
+				Hooks.openBrowser(driver, "reenbeauty.com");				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();			
 			}
 		}
