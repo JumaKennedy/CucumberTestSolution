@@ -42,41 +42,9 @@ public class InitDriver {
     
     public RemoteWebDriver makeDriver(String driverType)  {
         switch (driverType.toLowerCase()) {
-            case "chrome":
-            	
-			try {
-				proxy = new BrowserMobProxyServer();
-	    	    proxy.start(8080);
-	    	    seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
-	    	    String hostIp = Inet4Address.getLocalHost().getHostAddress();
-	    	    seleniumProxy.setHttpProxy(hostIp + ":" + proxy.getPort());
-	    	    seleniumProxy.setSslProxy(hostIp + ":" + proxy.getPort());
-	    	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);  
-	    	 
-	    	    ChromeOptions options = new ChromeOptions();
-	    	    options.addArguments("incognito");
-	    	    options.addArguments("--disable-web-security");
-	    	    options.addArguments("--allow-insecure-localhost");
-	    	    options.addArguments("--ignore-urlfetcher-cert-requests");
-	    	    
-	    	    DesiredCapabilities seleniumCapabilities = new DesiredCapabilities();
-	            seleniumCapabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
-	            seleniumCapabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-	            
-	            seleniumCapabilities.setCapability(ChromeOptions.CAPABILITY, options);
-	    		options.merge(seleniumCapabilities);    		
-	    		
-	    	    //System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver");
-	    	    //System.setProperty("webdriver.chrome.whitelistedIps", "");
-	    	    WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();
-	    	    WebDriverManager.chromedriver().setup();
-	    	    return new ChromeDriver(options);
-			} catch (UnknownHostException e) {
-				if(log.isDebugEnabled()) {
-					log.info("chrome browser Error: {}", e.getCause());
-				}
-			}
-            
+
+            case "chrome":              
+              return chrome();
             case "firefox":   
             // System.setProperty("webdriver.gecko.driver","src/test/resources/driver/geckodriver.exe");
             	WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();
@@ -87,6 +55,7 @@ public class InitDriver {
         }
     }
     
+
     public void openBrowser(WebDriver driver, String url) throws InterruptedException, IOException {
         proxy.newHar("google.com");
         driver.get(url);
@@ -95,6 +64,19 @@ public class InitDriver {
         File harFile = new File("google.har");
         har.writeTo(harFile);
     } 
+
+    private RemoteWebDriver chrome() {
+    	
+    	 ChromeOptions options = new ChromeOptions();
+         options.addArguments("incognito");
+         options.addArguments("--remote-allow-origins=*");
+         //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
+         //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
+         WebDriverManager.chromedriver().setup();
+         return new ChromeDriver(options);
+    	
+    }
+
     
     
     public RemoteWebDriver makeMobDriver(String deviceVersion)  {
