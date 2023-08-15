@@ -62,11 +62,7 @@ public class ScenarioContext {
 			driver = initDriver.makeDriver(getBrowser());
 			// Maximize current window
 			driver.manage().window().maximize();
-			try {
-				Hooks.openBrowser(driver, "reenbeauty.com");				
-			} catch (Exception e) {
-				e.printStackTrace();			
-			}
+			
 		}
 		return driver;
 	}

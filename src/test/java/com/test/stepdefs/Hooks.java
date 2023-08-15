@@ -50,20 +50,17 @@ public class Hooks {
 		sc.setScenario(scenario);
 	}
 	
-	public static void openBrowser(WebDriver driver, String url) throws InterruptedException, IOException {
-        proxy.newHar(url);
-        driver.get(url);
-        Thread.sleep(2000);
-        Har har = proxy.getHar();
-        String userDirectory = System.getProperty("user.dir");
-        File harFile = new File(userDirectory+File.separator+"my.har");
-        har.writeTo(harFile);
-    } 
+	/*
+	 * public static void openBrowser(WebDriver driver, String url) throws
+	 * InterruptedException, IOException { proxy.newHar(url); driver.get(url);
+	 * Thread.sleep(2000); Har har = proxy.getHar(); String userDirectory =
+	 * System.getProperty("user.dir"); File harFile = new
+	 * File(userDirectory+File.separator+"my.har"); har.writeTo(harFile); }
+	 */
 	
-	public static RemoteWebDriver chromeproxy() {
-    	
-	    BrowserMobProxy proxy = new BrowserMobProxyServer();
-	    proxy.start(80);
+	private static Proxy getProxy() {
+		BrowserMobProxy proxy = new BrowserMobProxyServer();	   
+	    proxy.start(80);	   
 	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
 	   
 	    String hostIp = null;
@@ -82,9 +79,20 @@ public class Hooks {
 	        log.info("\n\n******\nHeader Entries: \n{} \n********\n\n",request.headers().entries().toString());
 	        return null;
 	    });
-
-	    ChromeOptions options = new ChromeOptions();
-	    String proxyOption = "--proxy-server=" + seleniumProxy.getHttpProxy();
+		return seleniumProxy;		
+	}
+	
+	public static RemoteWebDriver chromeproxy() {	    
+	     //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
+	     //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
+	     WebDriverManager.chromedriver().setup();
+	     return new ChromeDriver(options());
+	
+   }
+	
+	private static ChromeOptions options() {
+		ChromeOptions options = new ChromeOptions();
+	    String proxyOption = "--proxy-server=" + getProxy().getHttpProxy();
 	    options.addArguments(proxyOption);
 	    options.addArguments("incognito");
 	    options.addArguments("--disable-infobars--");    	    
@@ -93,17 +101,13 @@ public class Hooks {
         options.addArguments("--ignore-certificate-errors");
         options.addArguments("--disable-web-security");
         options.addArguments("--allow-insecure-localhost");
-        options.addArguments("--ignore-urlfetcher-cert-requests");	    
-	     //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
-	     //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
-	     WebDriverManager.chromedriver().setup();
-	     return new ChromeDriver(options);
-	
-   }
+        options.addArguments("--ignore-urlfetcher-cert-requests");
+		return options;		
+	}
 	
 	public RemoteWebDriver chrome() {
     	
-	   	 ChromeOptions options = new ChromeOptions();
+	   	    ChromeOptions options = new ChromeOptions();
 	        options.addArguments("incognito");
 	        options.addArguments("--remote-allow-origins=*");
 	        //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
@@ -120,10 +124,10 @@ public class Hooks {
 			final byte[] screenshot = sc.getDriver().getScreenshotAs(OutputType.BYTES);
 			sc.getScenario().attach(screenshot, "image/png", scenDesc);
 		}
-			
-		//proxy.stop();
-		
 		sc.quitDriver();
+		if(proxy.isStarted())
+		proxy.stop();
+		
 	}
 	
 	
