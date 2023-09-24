@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -75,7 +76,7 @@ public class Hooks {
 	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
 	    
 	    proxy.addRequestFilter((request, contents, messageInfo)->{
-	        request.headers().add("iv-user", "login");
+	        request.headers().add("COP", "JKUFERIFUII879QN0E9F0JEF034");
 	        log.info("\n\n******\nHeader Entries: \n{} \n********\n\n",request.headers().entries().toString());
 	        return null;
 	    });
@@ -84,7 +85,7 @@ public class Hooks {
 	
 	public static RemoteWebDriver chromeproxy() {	    
 	     //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
-	     //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
+	     //WebDriverManager.chromedriver().driverVersion("117.0.5938.92").setup();         
 	     WebDriverManager.chromedriver().setup();
 	     return new ChromeDriver(options());
 	
@@ -105,13 +106,13 @@ public class Hooks {
 		return options;		
 	}
 	
-	public RemoteWebDriver chrome() {
+	public static RemoteWebDriver chrome() {
     	
 	   	    ChromeOptions options = new ChromeOptions();
 	        options.addArguments("incognito");
 	        options.addArguments("--remote-allow-origins=*");
 	        //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
-	        //WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();         
+	        //WebDriverManager.chromedriver().driverVersion("117.0.5938.92").setup();         
 	        WebDriverManager.chromedriver().setup();
 	        return new ChromeDriver(options);
 	   	
@@ -120,13 +121,17 @@ public class Hooks {
 
 	@After
 	public void after(Scenario scenario) {
-		if(scenario.isFailed()) {
-			final byte[] screenshot = sc.getDriver().getScreenshotAs(OutputType.BYTES);
-			sc.getScenario().attach(screenshot, "image/png", scenDesc);
+		try {
+			if(scenario.isFailed()) {
+				final byte[] screenshot = sc.getDriver().getScreenshotAs(OutputType.BYTES);
+				sc.getScenario().attach(screenshot, "image/png", scenDesc);
+			}
+			sc.quitDriver();
+			//if(proxy.isStarted())
+			//proxy.stop();
+		} catch (WebDriverException e) {
+			
 		}
-		sc.quitDriver();
-		if(proxy.isStarted())
-		proxy.stop();
 		
 	}
 	

@@ -43,10 +43,10 @@ public class InitDriver {
         switch (driverType.toLowerCase()) {
 
             case "chrome":              
-            	return Hooks.chromeproxy();
+            	return Hooks.chrome();
             case "firefox":   
                 // System.setProperty("webdriver.gecko.driver","src/test/resources/driver/geckodriver.exe");
-            	//WebDriverManager.chromedriver().driverVersion("113.0.5672.63").setup();
+            	//WebDriverManager.chromedriver().driverVersion("117.0.5938.92").setup();
             	WebDriverManager.firefoxdriver().setup();
              return new FirefoxDriver();
             default:
