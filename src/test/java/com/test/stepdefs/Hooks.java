@@ -127,8 +127,9 @@ public class Hooks {
 				sc.getScenario().attach(screenshot, "image/png", scenDesc);
 			}
 			sc.quitDriver();
-			//if(proxy.isStarted())
+			//if(!proxy.isStopped()) {
 			//proxy.stop();
+			//}
 		} catch (WebDriverException e) {
 			
 		}
