@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.os.ExecutableFinder;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,10 +84,21 @@ public class Hooks {
 		return seleniumProxy;		
 	}
 	
-	public static RemoteWebDriver chromeproxy() {	    
-	     //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
-	     //WebDriverManager.chromedriver().driverVersion("117.0.5938.92").setup();         
-	     WebDriverManager.chromedriver().setup();
+	public static RemoteWebDriver chromeproxy() {	
+		 String finderDriver = new ExecutableFinder().find("chromedriver.exe");
+		 if(finderDriver!=null) {
+			 System.setProperty("webdriver.chrome.driver", finderDriver);
+			 log.info("##################### path found: {} ##########################", finderDriver);
+		      
+		 }else {	
+			 finderDriver =  "src\\test\\resources\\driver\\chromedriver.exe";
+			 System.setProperty("webdriver.chrome.driver", finderDriver);
+			 log.info("##################### path Not found: {} ##########################", finderDriver);
+		 }		 	 
+	     
+		 ///WebDriverManager.chromedriver().driverVersion("122.0.6261.70").setup(); 
+	     //WebDriverManager.chromedriver().driverVersion("122.0.6261.70").setup();   
+		//WebDriverManager.chromedriver().setup();
 	     return new ChromeDriver(options());
 	
    }
@@ -112,8 +124,9 @@ public class Hooks {
 	        options.addArguments("incognito");
 	        options.addArguments("--remote-allow-origins=*");
 	        //System.setProperty("webdriver.chrome.driver", "C:\\DevTools\\webDrivers\\chromedriver.exe");
-	        //WebDriverManager.chromedriver().driverVersion("117.0.5938.92").setup();         
-	        WebDriverManager.chromedriver().setup();
+	        
+	        WebDriverManager.chromedriver().driverVersion("122.0.6261.70").setup();         
+	        //WebDriverManager.chromedriver().setup();
 	        return new ChromeDriver(options);
 	   	
 	 }
